@@ -1,0 +1,16 @@
+
+const String countryCode = 'MY';
+
+const String developerKey = 'eyJraWQiOiJIUkg3RExOQTY0IiwiYWxnIjoiRVMyNTYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJGQlRHMkJNNEY2IiwiZXhwIjoxNjkxMDkwOTAyLCJpYXQiOjE2OTEwMDQ1MDJ9.K-P2Q8YqKzL_iUmZ0V28p3DWyC0xkcHYk6-oiO6wVg6AvHfXvwOQYN4mRTbi7mGHs5aJwt52C14LGrEi6TviLA';
+
+/// GENERATE DEVELOPER KEY USIN PRIVATE KEY
+const String keyID = "HRH7DLNA64";
+
+const String teamID = "FBTG2BM4F6";
+
+const String privateKey = '''-----BEGIN PRIVATE KEY-----
+MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgc3GdHCCGyBgIeS9a
+DA/1gIwtaQukySHEAisxhmwoDbigCgYIKoZIzj0DAQehRANCAAQ4tK+O2eQPI6pB
+pXNiCcwjOtrrHSCxIy3et3tJ/susV7d7AhvHupw1c3TILO0+2/bM2v9gnofMmDkH
+o3RfR6BG
+-----END PRIVATE KEY-----''';
