@@ -7,7 +7,7 @@ class AppleMusicDio {
     _.addAll({
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': "Bearer ${AppleMusicToken.developerToken}"
+      'Authorization': "Bearer ${AppleMusicToken.token}"
     });
     return _;
   }
