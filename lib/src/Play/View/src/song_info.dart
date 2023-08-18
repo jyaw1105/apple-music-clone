@@ -10,16 +10,15 @@ class _SongInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double size =
-        isHeader ? 50.0 : MediaQuery.of(context).size.shortestSide * 0.62;
+    double safeHeight = (MediaQuery.of(context).size.height -
+        MediaQuery.of(context).viewPadding.bottom);
+    double size = isHeader ? 50.0 : safeHeight * 0.3;
     double? right = isHeader ? null : 0.0;
-    double imageHeadGap =
-        isHeader ? 0.0 : MediaQuery.of(context).size.shortestSide * 0.14;
-    double infoTopPadding =
-        isHeader ? 5.0 : MediaQuery.of(context).size.shortestSide;
+    double imageHeadGap = isHeader ? 0.0 : safeHeight * 0.02;
+    double infoTopPadding = isHeader ? 5.0 : safeHeight * 0.31 + 50;
     double infoLeftPadding = isHeader ? size + 15.0 : 0.0;
     double fontSize = isHeader ? 18 : 24;
-    double infoBottomPadding = isHeader ? 10 : 0;
+    double infoBottomPadding = isHeader ? 10 : safeHeight * 0.0;
 
     return Stack(
       alignment: Alignment.topLeft,

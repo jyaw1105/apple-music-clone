@@ -36,7 +36,6 @@ class PlayPage extends GetView<PlayController> {
                   stops: [0.3, 0.7])),
           child: SafeArea(
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
                   width: 45.0,
@@ -49,83 +48,92 @@ class PlayPage extends GetView<PlayController> {
                 _SongInfo(
                     song: model?.song, isHeader: model?.minimizeInfo ?? false),
                 SizedBox(height: 30.0),
-                AnimatedOpacity(
-                  opacity: model!.minimizeInfo ? 0.0 : 1.0,
-                  duration: Duration(milliseconds: 200),
-                  child: _DurationBar(
-                    duration: model.duration,
-                    currentDuration: model.currentDuration,
-                    onChanged: (double volume) async {
-                      controller.changeDuration(volume);
-                    },
+                Expanded(
+                  child: Column(
+                    children: [
+                      AnimatedOpacity(
+                        opacity: model!.minimizeInfo ? 0.0 : 1.0,
+                        duration: Duration(milliseconds: 200),
+                        child: _DurationBar(
+                          duration: model.duration,
+                          currentDuration: model.currentDuration,
+                          onChanged: (double volume) async {
+                            controller.changeDuration(volume);
+                          },
+                        ),
+                      ),
+                      Expanded(child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return AnimatedContainer(
+                            height: model!.minimizeInfo
+                                ? constraints.maxHeight
+                                : 0.0,
+                            duration: Duration(milliseconds: 200),
+                            child: model.minimizeInfo
+                                ? model.displayOption == DisplayOption.list
+                                    ? _List(currentOption: model.playOptions)
+                                    : Container()
+                                : null,
+                          );
+                        },
+                      )),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 25),
+                        child: _ControlButton(
+                          playOnPressed: () {
+                            controller.playOnClick();
+                          },
+                          nextOnPressed: () {
+                            controller.nextSong();
+                          },
+                          backOnPressed: () {
+                            controller.previousSong();
+                          },
+                          isPlaying: model!.isPlaying,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      _Volume(
+                        onChanged: (double volume) async {
+                          controller.changeVolume(volume, updateSystem: true);
+                        },
+                        value: model.volume ?? 1.0,
+                      ),
+                      SizedBox(height: 30.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          _DisplayOptionButton(
+                            value: DisplayOption.lyrics,
+                            current: model.displayOption,
+                            icon: (model.song?.attributes?.hasLyrics ?? false)
+                                ? AppIconClass.lyrics
+                                : AppIconClass.lyrics_filled,
+                            enabled:
+                                (model.song?.attributes?.hasLyrics ?? false),
+                            onTap: (DisplayOption option) {
+                              Get.find<PlayController>().minimizeInfo(option);
+                            },
+                          ),
+                          IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.airplay_outlined,
+                                size: 30,
+                              )),
+                          _DisplayOptionButton(
+                            value: DisplayOption.list,
+                            current: model.displayOption,
+                            icon: Icons.list_rounded,
+                            onTap: (DisplayOption option) {
+                              Get.find<PlayController>().minimizeInfo(option);
+                            },
+                          ),
+                        ],
+                      )
+                    ],
                   ),
-                ),
-                Expanded(child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    return AnimatedContainer(
-                      height: model.minimizeInfo ? constraints.maxHeight : 0.0,
-                      duration: Duration(milliseconds: 200),
-                      child: model.minimizeInfo
-                          ? model.displayOption == DisplayOption.list
-                              ? _List(currentOption: model.playOptions)
-                              : Container()
-                          : null,
-                    );
-                  },
-                )),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 25),
-                  child: _ControlButton(
-                    playOnPressed: () {
-                      controller.playOnClick();
-                    },
-                    nextOnPressed: () {
-                      controller.nextSong();
-                    },
-                    backOnPressed: () {
-                      controller.previousSong();
-                    },
-                    isPlaying: model.isPlaying,
-                  ),
-                ),
-                SizedBox(height: 10),
-                _Volume(
-                  onChanged: (double volume) async {
-                    controller.changeVolume(volume, updateSystem: true);
-                  },
-                  value: model.volume ?? 1.0,
-                ),
-                SizedBox(height: 30.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _DisplayOptionButton(
-                      value: DisplayOption.lyrics,
-                      current: model.displayOption,
-                      icon: (model.song?.attributes?.hasLyrics ?? false)
-                          ? AppIconClass.lyrics
-                          : AppIconClass.lyrics_filled,
-                      enabled: (model.song?.attributes?.hasLyrics ?? false),
-                      onTap: (DisplayOption option) {
-                        Get.find<PlayController>().minimizeInfo(option);
-                      },
-                    ),
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.airplay_outlined,
-                          size: 30,
-                        )),
-                    _DisplayOptionButton(
-                      value: DisplayOption.list,
-                      current: model.displayOption,
-                      icon: Icons.list_rounded,
-                      onTap: (DisplayOption option) {
-                        Get.find<PlayController>().minimizeInfo(option);
-                      },
-                    ),
-                  ],
                 )
               ],
             ),
