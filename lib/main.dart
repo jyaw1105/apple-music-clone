@@ -54,7 +54,8 @@ class MyApp extends StatelessWidget {
           navigatorObservers: [FlutterSmartDialog.observer],
           initialRoute: NavigationRoute.none.path,
           getPages: NavigationRoute.values
-              .map((e) => GetPage(name: e.path, page: () => e.widget()))
+              .map((e) => GetPage(
+                  name: e.path, page: () => e.widget(), binding: e.bindings))
               .toList(),
         ));
     // );

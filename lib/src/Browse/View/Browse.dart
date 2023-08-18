@@ -27,7 +27,7 @@ class _BrowserPageState extends State<BrowsePage>
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext buildContext) {
     super.build(context);
     return BlocProvider<BrowseBloc>(
         create: (_) => bloc,
@@ -38,8 +38,7 @@ class _BrowserPageState extends State<BrowsePage>
           // }
         }, child: BlocBuilder<BrowseBloc, BrowseState>(
                 builder: (context, BrowseState state) {
-          return Scaffold(
-              body: SafeArea(
+          return SafeArea(
             child: NotificationListener(
               onNotification: (ScrollNotification scrollInfo) {
                 if (scrollInfo.metrics.axis == Axis.vertical) {
@@ -98,7 +97,8 @@ class _BrowserPageState extends State<BrowsePage>
                               ),
                             ),
                             StorefrontWidget(
-                                playlistOnTap: playlistOnTap,
+                                playlistOnTap: (Playlists playlists) =>
+                                    playlistOnTap(playlists, buildContext),
                                 playlists: state.storefronts!)
                           ],
                         ),
@@ -135,7 +135,8 @@ class _BrowserPageState extends State<BrowsePage>
                                 )),
                             SizedBox(height: 5),
                             GridPlaylistsWidget(
-                              playlistOnTap: playlistOnTap,
+                              playlistOnTap: (Playlists playlists) =>
+                                  playlistOnTap(playlists, buildContext),
                               playlists: state.mostPlaylists ?? [],
                               row: 2,
                             )
@@ -174,7 +175,8 @@ class _BrowserPageState extends State<BrowsePage>
                                 )),
                             SizedBox(height: 5),
                             GridPlaylistsWidget(
-                              playlistOnTap: playlistOnTap,
+                              playlistOnTap: (Playlists playlists) =>
+                                  playlistOnTap(playlists, buildContext),
                               playlists:
                                   state.charts?.cityCharts?[0].data ?? [],
                             )
@@ -213,7 +215,8 @@ class _BrowserPageState extends State<BrowsePage>
                                 )),
                             SizedBox(height: 5),
                             GridPlaylistsWidget(
-                              playlistOnTap: playlistOnTap,
+                              playlistOnTap: (Playlists playlists) =>
+                                  playlistOnTap(playlists, buildContext),
                               playlists:
                                   state.charts?.dailyGlobalTopCharts?[0].data ??
                                       [],
@@ -225,12 +228,12 @@ class _BrowserPageState extends State<BrowsePage>
                 ),
               ),
             ),
-          ));
+          );
         })));
   }
 
-  void playlistOnTap(Playlists playlists) {
-    bloc.add(PlaylistOnTap(playlists: playlists));
+  void playlistOnTap(Playlists playlists, BuildContext context) {
+    bloc.add(PlaylistOnTap(playlists: playlists, context: context));
   }
 
   @override

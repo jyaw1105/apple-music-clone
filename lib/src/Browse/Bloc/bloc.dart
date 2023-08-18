@@ -1,12 +1,12 @@
 import 'package:apple_music_clone/model/ChartResponse.dart';
 import 'package:apple_music_clone/model/Playlists.dart';
 import 'package:apple_music_clone/service/appleMusic/AppleMusicService.dart';
-import 'package:apple_music_clone/service/navigation/enum.dart';
 import 'package:apple_music_clone/src/Browse/Bloc/event.dart';
 import 'package:apple_music_clone/src/Browse/Bloc/state.dart';
+import 'package:apple_music_clone/src/Chart/View/Chart.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 
 class BrowseBloc extends Bloc<BrowseEvent, BrowseState> {
   BrowseBloc() : super(BrowseState()) {
@@ -45,9 +45,8 @@ class BrowseBloc extends Bloc<BrowseEvent, BrowseState> {
 
   void _mapPlaylistOnTapToEvent(
       PlaylistOnTap event, Emitter<BrowseState> emit) async {
-    Get.toNamed(NavigationRoute.chart.path, arguments: {
-      'href': event.playlists.href,
-      'playlists': event.playlists
-    });
+    Navigator.of(event.context).push(MaterialPageRoute(
+        builder: (_) =>
+            ChartPage(href: event.playlists.href, playlists: event.playlists)));
   }
 }
