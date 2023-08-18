@@ -1,17 +1,20 @@
-import 'dart:typed_data';
-
+import 'package:apple_music_clone/model/Playlists.dart';
 import 'package:apple_music_clone/src/Chart/View/Chart.dart';
-import 'package:flutter/material.dart';
 // import 'package:apple_music_clone/src/Detail/View/DetailView.dart';
 import 'package:apple_music_clone/src/Home/View/Home.dart';
+import 'package:apple_music_clone/src/Play/View/Play.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:apple_music_clone/src/Login/View/Login.dart';
 // import 'package:apple_music_clone/src/Pdf/PdfView.dart';
 
-enum NavigationRoute { 
-// login, loginWeb, 
-none, home, chart
-// detail, detail2, pdf 
+enum NavigationRoute {
+// login, loginWeb,
+  none,
+  home,
+  chart,
+  play
+// detail, detail2, pdf
 }
 
 extension NavigationRouteFactory on NavigationRoute {
@@ -27,6 +30,8 @@ extension NavigationRouteFactory on NavigationRoute {
         return '/home';
       case NavigationRoute.chart:
         return '/chart';
+      case NavigationRoute.play:
+        return '/play';
       // case NavigationRoute.detail:
       //   return '/detail';
       // case NavigationRoute.detail2:
@@ -50,11 +55,11 @@ extension NavigationRouteFactory on NavigationRoute {
       case NavigationRoute.home:
         return HomePage();
       case NavigationRoute.chart:
-        // final String? type = data['type'] as String?;
-        // if (type == null) {
-        //   throw Exception('Route $path requires a type');
-        // }
-        return ChartPage();
+        final String? href = data['href'] as String?;
+        final Playlists? playlists = data['playlists'] as Playlists?;
+        return ChartPage(href: href, playlists: playlists);
+      case NavigationRoute.play:
+        return PlayPage();
       // case NavigationRoute.detail:
       //   final String? code = data['code'] as String?;
       //   if (code == null) {
@@ -76,5 +81,12 @@ extension NavigationRouteFactory on NavigationRoute {
       //   }
       //   return PdfView(title: "title", filename: "filename", bytes: bytes);
     }
+  }
+
+  Bindings? get bindings {
+    // if(this == NavigationRoute.play) {
+    //   return PlayBinding();
+    // }
+    return null;
   }
 }

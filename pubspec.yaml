@@ -51,7 +51,8 @@ dependencies:
   carousel_slider:
   cached_network_image:
   flutter_widget_from_html:
-
+  intl:
+  
   ## MUST FOR IOS
   app_tracking_transparency:
 
@@ -69,7 +70,10 @@ dependencies:
 
   ## MUSIC
   # music_kit: ^1.1.0
-
+  # perfect_volume_control:
+  volume_controller:
+  audioplayers:
+  
   ## Connectivity
   connectivity_plus:
   connectivity_bloc:
@@ -94,7 +98,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+    - assets/fonts/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
@@ -109,6 +114,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family:  AppIconClass
+      fonts:
+       - asset: assets/fonts/AppIconClass.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

@@ -1,5 +1,6 @@
 import 'package:apple_music_clone/model/Playlists.dart';
 import 'package:apple_music_clone/model/Songs.dart';
+import 'package:apple_music_clone/service/appleMusic/PlayService.dart';
 import 'package:apple_music_clone/src/Chart/Bloc/bloc.dart';
 import 'package:apple_music_clone/src/Chart/Bloc/event.dart';
 import 'package:apple_music_clone/src/Chart/Bloc/state.dart';
@@ -17,15 +18,20 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class ChartPage extends StatefulWidget {
-  ChartPage();
+  final Playlists? playlists;
+  final String? href;
+
+  ChartPage({required this.playlists, required this.href});
   @override
-  State<StatefulWidget> createState() => _ChartPageState();
+  State<StatefulWidget> createState() =>
+      _ChartPageState(playlists: playlists, href: href);
 }
 
 class _ChartPageState extends State<ChartPage> {
-  final Playlists? playlists = Get.arguments['playlists'];
-  final String? href = Get.arguments['href'];
-  _ChartPageState();
+  final Playlists? playlists; // = Get.arguments['playlists'];
+  final String? href; // = Get.arguments['href'];
+
+  _ChartPageState({required this.playlists, required this.href});
 
   final ChartBloc bloc = ChartBloc();
   ValueNotifier<bool> showAppBar = ValueNotifier(false);
@@ -145,7 +151,10 @@ class _ChartPageState extends State<ChartPage> {
                                 children: [
                                   Expanded(
                                       child: TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Get.find<PlayController>()
+                                          .playPlaylist(playlists!);
+                                    },
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -311,7 +320,14 @@ class _ChartPageState extends State<ChartPage> {
                                   if (showBig) {
                                     return SongTileExpanded(song: song);
                                   }
-                                  return SongTile(song: song);
+                                  return SongTile(
+                                    song: song,
+                                    onTap: () {
+                                      Get.find<PlayController>().changeSong(
+                                          song,
+                                          playlists: playlists);
+                                    },
+                                  );
                                 });
                           }),
                     )

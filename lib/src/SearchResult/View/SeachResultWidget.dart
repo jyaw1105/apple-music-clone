@@ -2,6 +2,7 @@ import 'package:apple_music_clone/model/Albums/Albums.dart';
 import 'package:apple_music_clone/model/Playlists.dart';
 import 'package:apple_music_clone/model/SearchResult.dart';
 import 'package:apple_music_clone/model/Songs.dart';
+import 'package:apple_music_clone/service/appleMusic/PlayService.dart';
 import 'package:apple_music_clone/src/Chart/View/AlbumTile.dart';
 import 'package:apple_music_clone/src/Chart/View/PlaylistTile.dart';
 import 'package:apple_music_clone/src/Chart/View/SongTile.dart';
@@ -13,6 +14,7 @@ import 'package:apple_music_clone/widget/rectangular_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 
 class SearchResultWidget extends StatefulWidget {
   final Map<String, SearchParam<dynamic>>? data;
@@ -116,7 +118,13 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
                                     if (showBig) {
                                       child = SongTileExpanded(song: item);
                                     }
-                                    child = SongTile(song: item);
+                                    child = SongTile(
+                                      song: item,
+                                      onTap: () {
+                                        Get.find<PlayController>()
+                                            .changeSong(item);
+                                      },
+                                    );
                                   } else if (item is Playlists) {
                                     child = PlaylistTile(playlists: item);
                                   } else if (item is Albums) {
