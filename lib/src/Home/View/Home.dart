@@ -51,7 +51,11 @@ class _HomePageState extends State<HomePage>
                 connectivityBloc.state is ConnectivityFailureState
                     ? List.generate(
                         3, (index) => Center(child: Text("No Connectivity")))
-                    : [BrowsePage(), ComingSoonPage(), SearchPage()];
+                    : [
+                        BrowsePage(),
+                        ComingSoonPage(),
+                        SearchPage(),
+                      ];
             return Scaffold(
                 body: IndexedStack(
                   children: children

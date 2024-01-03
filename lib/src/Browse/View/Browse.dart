@@ -224,6 +224,11 @@ class _BrowserPageState extends State<BrowsePage>
                           ],
                         ),
                       ),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 95.0),
+                      ),
+                    ),
                   ],
                 ),
               ),

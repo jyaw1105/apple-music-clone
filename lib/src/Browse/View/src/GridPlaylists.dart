@@ -17,7 +17,7 @@ class GridPlaylistsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double extent = (MediaQuery.of(context).size.width - 30) * 0.5 - 10;
     double width = ((MediaQuery.of(context).size.width - 30) * 0.5) - 10;
-    double height = (width + 45.0);
+    double height = (width + 46.0);
 
     return SizedBox(
       height: height * row + (gapPadding * row * row),

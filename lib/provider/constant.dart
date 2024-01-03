@@ -8,4 +8,9 @@ const String keyID = "";
 
 const String teamID = "";
 
-const String privateKey = '''-----BEGIN PRIVATE KEY----------END PRIVATE KEY-----''';
+const String privateKey = '''-----BEGIN PRIVATE KEY-----
+xxxxxx
+xxxxxx
+xxxxxx
+xxxxxx
+-----END PRIVATE KEY-----''';

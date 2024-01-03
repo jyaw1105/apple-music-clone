@@ -106,7 +106,12 @@ class _SearchPageState extends State<SearchPage>
                                       ),
                                     )
                                   : Container(),
-                    )
+                    ),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 95.0),
+                      ),
+                    ),
                   ],
                 ),
               ),

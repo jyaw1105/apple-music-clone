@@ -5,9 +5,9 @@ import "package:dart_jsonwebtoken/dart_jsonwebtoken.dart";
 // import 'package:music_kit/music_kit.dart';
 
 class AppleMusicToken {
-  static late String _countryCode;
-  static late String _developerToken;
-  static late String _userToken;
+  static final String _countryCode = "MY";
+  static final String _developerToken = token;
+  static final String _userToken = "";
 
   // static MusicKit musicKit = MusicKit();
 
@@ -17,9 +17,9 @@ class AppleMusicToken {
     // _developerToken = await musicKit.requestDeveloperToken();
     // _userToken = await musicKit.requestUserToken(_developerToken);
     // _countryCode = await musicKit.currentCountryCode;
-    _developerToken = token;
-    _userToken = "";
-    _countryCode = "MY";
+    // _developerToken = token;
+    // _userToken = "";
+    // _countryCode = "MY";
   }
 
   static String get userToken => _userToken;
