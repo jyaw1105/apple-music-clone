@@ -1,7 +1,7 @@
 import 'package:apple_music_clone/core/app_export.dart';
 import 'package:apple_music_clone/src/Browse/View/Browse.dart';
-import 'package:apple_music_clone/src/Home/widget/ComingSoon.dart';
 import 'package:apple_music_clone/src/Home/controller/home_page_controller.dart';
+import 'package:apple_music_clone/src/Home/widget/ComingSoon.dart';
 import 'package:apple_music_clone/src/Play/play_page_screen.dart';
 import 'package:apple_music_clone/src/Search/search_page_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,18 +26,24 @@ class HomePage extends GetWidget<HomePageController> {
         return Scaffold(
           body: IndexedStack(
             children: children
+                .asMap()
                 .map(
-                  (e) => Navigator(
-                    onGenerateRoute: (RouteSettings settings) {
-                      return MaterialPageRoute(
-                        settings: settings,
-                        builder: (BuildContext context) {
-                          return e;
-                        },
-                      );
-                    },
+                  (int index, e) => MapEntry(
+                    index,
+                    Navigator(
+                      key: controller.navigatorKeys[index],
+                      onGenerateRoute: (RouteSettings settings) {
+                        return MaterialPageRoute(
+                          settings: settings,
+                          builder: (BuildContext context) {
+                            return e;
+                          },
+                        );
+                      },
+                    ),
                   ),
                 )
+                .values
                 .toList(),
             index: controller.pageIndex.value,
           ),

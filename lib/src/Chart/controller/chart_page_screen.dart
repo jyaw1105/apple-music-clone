@@ -7,17 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
 class ChartPageController extends GetxController {
+  final String? href;
+  final Playlists? playlists;
   late Rx<ChartModel> chartModel;
   final AppleMusicService appleMusicService = AppleMusicService();
+  ChartPageController({required this.href, required this.playlists});
 
   @override
   void onInit() {
     super.onInit();
-    dynamic arguments = Get.arguments;
-    chartModel = Rx(ChartModel(href: arguments?['href'] as String?));
+    chartModel = Rx(ChartModel(href: href));
     if ((chartModel.value.href ?? '').isNotEmpty) {
       chartModel.update((val) {
-        val!.playlists.value = arguments?['playlists'] as Playlists?;
+        val!.playlists.value = playlists;
       });
       getDataByHref();
     } else {

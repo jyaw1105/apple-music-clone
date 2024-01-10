@@ -11,6 +11,8 @@ class HomePageController extends GetxController
 
   final NetworkInfo networkInfo = Get.find<NetworkInfo>();
   RxBool hasConnectivity = RxBool(true);
+  final List<GlobalKey<State>> navigatorKeys =
+      List.generate(3, (index) => GlobalKey());
 
   @override
   void onInit() {

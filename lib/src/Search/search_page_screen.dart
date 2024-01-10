@@ -52,7 +52,7 @@ class SearchPage extends GetView<SearchPageController> {
                     child: searchStatus == SearchStatus.searching
                         ? Text("Searching")
                         : searchStatus == SearchStatus.result
-                            ? SearchResultWidget(data: searchResults)
+                            ? SearchResultWidget()
                             : ((genres ?? []).isNotEmpty)
                                 ? Padding(
                                     padding: const EdgeInsets.all(8.0),

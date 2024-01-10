@@ -7,7 +7,7 @@ import 'package:apple_music_clone/src/Chart/View/AlbumTile.dart';
 import 'package:apple_music_clone/src/Chart/View/PlaylistTile.dart';
 import 'package:apple_music_clone/src/Chart/View/SongTile.dart';
 import 'package:apple_music_clone/src/Chart/View/SongTileExpanded.dart';
-import 'package:apple_music_clone/src/Search/controller/search_result_controller.dart';
+import 'package:apple_music_clone/src/Search/controller/search_page_controller.dart';
 import 'package:apple_music_clone/widget/rectangular_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,19 +15,13 @@ import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class SearchResultWidget extends StatelessWidget {
-  final Map<String, SearchParam<dynamic>>? data;
-
-  SearchResultWidget({required this.data}) {
-    controller = Get.put(SearchResultController(data));
-  }
-
 //   @override
 //   State<StatefulWidget> createState() => _SearchResultWidgetState();
 // }
 
 // class _SearchResultWidgetState extends State<SearchResultWidget> {
 
-  late SearchResultController controller;
+  late SearchPageController controller = Get.find<SearchPageController>();
 
   String parseTitle(String e) {
     if (e == 'topResults') {
@@ -46,8 +40,15 @@ class SearchResultWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      if ((data?.keys ?? {}).isEmpty) {
+    return Obx(() {
+      Map<String, SearchParam<dynamic>>? data =
+          controller.searchModelRx.value.searchResults.value;
+      if (data == null) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+      if (data.keys.isEmpty) {
         return Center(
           child: Text("No Result"),
         );
@@ -86,13 +87,13 @@ class SearchResultWidget extends StatelessWidget {
                           .toList()),
                 )),
             Expanded(child: Obx(() {
-              int? currentPage = controller.currentPageRx.value;
+              int? currentPage = controller.pageIndex.value;
               return IndexedStack(
                 index: currentPage,
-                children: data!.keys
+                children: data.keys
                     .map(
                       (e) => Column(
-                        children: (data![e]!.data).map<Widget>((item) {
+                        children: (data[e]!.data).map<Widget>((item) {
                           return CupertinoContextMenu.builder(
                               actions: [
                                 CupertinoContextMenuAction(

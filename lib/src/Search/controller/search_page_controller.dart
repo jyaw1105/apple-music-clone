@@ -1,8 +1,12 @@
 import 'package:apple_music_clone/core/app_export.dart';
 import 'package:apple_music_clone/model/Genre.dart';
+import 'package:apple_music_clone/model/Playlists.dart';
 import 'package:apple_music_clone/model/SearchResult.dart';
 import 'package:apple_music_clone/service/appleMusic/AppleMusicService.dart';
+import 'package:apple_music_clone/src/Chart/chart_page_screen.dart';
+import 'package:apple_music_clone/src/Home/controller/home_page_controller.dart';
 import 'package:apple_music_clone/src/Search/model/search_model.dart';
+import 'package:flutter/material.dart';
 
 /// A controller class for the SearchPageScreen.
 ///
@@ -39,13 +43,18 @@ class SearchPageController extends GetxController {
     } else {
       searchModelRx.update((val) async {
         val!.searchStatusRx.value = SearchStatus.result;
-        try {
-          Map<String, SearchParam<dynamic>> data =
-              await appleMusicService.searchTerm(val.searchText);
-          val.searchResults.value = data;
-        } catch (e) {
-          val.searchResults.value = {};
-        }
+        val.searchResults.value = null;
+      });
+      appleMusicService
+          .searchTerm(searchModelRx.value.searchText)
+          .then((Map<String, SearchParam<dynamic>> data) {
+        searchModelRx.update((val) {
+          val!.searchResults.value = data;
+        });
+      }).catchError((er) {
+        searchModelRx.update((val) {
+          val!.searchResults.value = {};
+        });
       });
     }
   }
@@ -80,5 +89,29 @@ class SearchPageController extends GetxController {
 
   void tabOnTap(int index) {
     pageIndex.value = index;
+  }
+
+  void itemOnTap(dynamic data) {
+    print(data);
+    if (data is Playlists) {
+      HomePageController homePageController = Get.find<HomePageController>();
+      int index = homePageController.pageIndex.value;
+      Navigator.of(
+              homePageController.navigatorKeys[index].currentState!.context)
+          .push(
+        MaterialPageRoute(
+          builder: (_) => ChartPage(
+            href: data.href,
+            playlists: data,
+          ),
+          settings: RouteSettings(
+            arguments: {
+              'href': data.href,
+              'playlists': data,
+            },
+          ),
+        ),
+      );
+    }
   }
 }

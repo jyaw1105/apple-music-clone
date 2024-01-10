@@ -15,7 +15,14 @@ import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class ChartPage extends StatelessWidget {
-  final ChartPageController controller = Get.put(ChartPageController());
+  final String? href;
+  final Playlists? playlists;
+
+  ChartPage({this.href, this.playlists}) {
+    controller = Get.put(ChartPageController(href: href, playlists: playlists));
+  }
+
+  late ChartPageController controller;
 
   ValueNotifier<bool> showAppBar = ValueNotifier(false);
 
