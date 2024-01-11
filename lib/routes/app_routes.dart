@@ -9,7 +9,7 @@ class AppRoutes {
 
   static const String homeScreen = '/home';
 
-  static const String chartScreen = '/chart';
+  // static const String chartScreen = '/chart';
 
   static List<GetPage> pages = [
     GetPage(
@@ -19,12 +19,12 @@ class AppRoutes {
         HomePageBinding(),
       ],
     ),
-    GetPage(
-      name: chartScreen,
-      page: () => ChartPage(),
-      bindings: [
-        ChartPageBinding(),
-      ],
-    ),
+    // GetPage(
+    //   name: chartScreen,
+    //   page: () => ChartPage(),
+    //   bindings: [
+    //     ChartPageBinding(),
+    //   ],
+    // ),
   ];
 }

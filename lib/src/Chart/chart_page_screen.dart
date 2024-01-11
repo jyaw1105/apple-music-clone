@@ -14,12 +14,31 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 // ignore: must_be_immutable
-class ChartPage extends StatelessWidget {
+
+class ChartPage extends StatefulWidget {
   final String? href;
   final Playlists? playlists;
 
-  ChartPage({this.href, this.playlists}) {
-    controller = Get.put(ChartPageController(href: href, playlists: playlists));
+  ChartPage({required this.href, required this.playlists});
+
+  @override
+  State<StatefulWidget> createState() {
+    return _ChartPageState();
+  }
+}
+
+class _ChartPageState extends State<ChartPage> {
+  @override
+  void initState() {
+    super.initState();
+    controller = Get.put(
+        ChartPageController(href: widget.href, playlists: widget.playlists));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    Get.delete<ChartPageController>();
   }
 
   late ChartPageController controller;
